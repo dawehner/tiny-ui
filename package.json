@@ -1,0 +1,12 @@
+{
+  "name": "tiny-ui",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^1.4.13"
+  },
+  "scripts": {
+    "start": "electron ."
+  }
+}
