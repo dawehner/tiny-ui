@@ -35,13 +35,14 @@ class FileDrop extends Component {
       if (file.type.match(/image.*/)) {
         const reader = new FileReader();
         reader.onload = (e2) => {
+          console.log(e2.target.result);
           this.setState({
-            imageUrl: 'data:image/png;base64,' + btoa(e2.target.result),
+            // imageUrl: 'data:image/png;base64,' + btoa(e2.target.result),
             image: e2.target.result,
           });
           this.props.onUpload(e2.target.result);
         };
-        reader.readAsBinaryString(file);
+        reader.readAsArrayBuffer(file);
       }
     }
   }
@@ -70,9 +71,9 @@ class FileDrop extends Component {
 
 }
 
-FileDrop.propTypes = {
-  onUpload: React.propTypes.func.isRequired()
-};
+// FileDrop.propTypes = {
+//   onUpload: React.propTypes.func.isRequired()
+// };
 
 const styles = StyleSheet.create({
   style: {
