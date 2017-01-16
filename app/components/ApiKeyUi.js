@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { Textfield, Button } from 'react-mdl/lib';
 
 class ApiKeyUi extends Component {
 
@@ -28,27 +29,24 @@ class ApiKeyUi extends Component {
   }
 
   render() {
-    const inputClass = this.state.valid ? css(styles.green) : css(styles.red);
+    const apiKeyField = this.state.valid ? (
+        <Textfield
+          label="Api key"
+        />
+      ) : (
+        <Textfield
+          label="Api key"
+          error="Invalid API key"
+        />
+      );
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          Api key
-          <input className={inputClass} type="text" />
-        </label>
-        <input type="submit" value="Submit" />
+        { apiKeyField }
+        <Button raised colored>Submit</Button>
       </form>
     )
   }
 
 }
-
-const styles = StyleSheet.create({
-  red: {
-    backgroundColor: 'red',
-  },
-  green: {
-    backgroundColor: 'green',
-  },
-});
 
 export default ApiKeyUi;

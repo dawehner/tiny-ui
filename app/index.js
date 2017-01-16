@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 
 import ApiKeyUi from './components/ApiKeyUi.js';
 import FileDrop from './components/FileDrop.js';
+import TinyPngResult from './components/TinyPngResult.js';
 
 class TinyUi extends Component {
 
@@ -41,6 +42,25 @@ class TinyUi extends Component {
   }
 
   render() {
+    let resultTingPng = {
+      input: {
+        size: 34213,
+        type: "image/png"
+      },
+      output: {
+        height: 150,
+        width: 420,
+        ratio: 0.2805,
+        size: 9597,
+        type: "image/png",
+        url: "https://api.tinify.com/output/vlqfm569pi2t1ed2.png",
+      },
+    };
+
+    return (
+      <TinyPngResult tinypngResult={resultTingPng} />
+    );
+
     let result;
     if (this.state.apiKey === null) {
       result = (

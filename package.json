@@ -10,12 +10,15 @@
     "babelify": "^7.3.0",
     "browserify": "^13.0.0",
     "electron": "^1.4.13",
+    "electron-save-file": "^1.0.2",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-mdl": "^1.9.0",
     "watchify": "^3.7.0"
   },
   "scripts": {
     "build": "browserify ./app/index.js -t babelify -o app/bundle.js",
-    "start": "watchify ./app/index.js -v -t babelify -o app/bundle.js && electron ."
+    "watch": "watchify ./app/index.js -v -t babelify -o app/bundle.js",
+    "start": "node_modules/electron/dist/Electron.app/Contents/MacOS/Electron ."
   }
 }
