@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -19,6 +19,24 @@ function createWindow () {
 
   // Open the DevTools.
   win.webContents.openDevTools()
+
+
+
+  const template = [
+    {
+      label: 'TinyUI',
+      submenu: [
+        {
+          label: 'Settings',
+          role: 'settings',
+          accelerator: 'Cmd+,',
+        },
+      ],
+    },
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -53,3 +71,4 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
