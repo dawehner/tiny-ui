@@ -50,6 +50,7 @@ class TinyUi extends Component {
   }
 
   onSuccessfulUpload(image) {
+    console.log(image);
     this.setState({imageUrl: image});
 
     const basicAuth = 'api:' + this.state.apiKey;
