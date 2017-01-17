@@ -13,7 +13,6 @@ class TinyPngresult extends Component {
   }
 
   render() {
-    console.log(this.props);
     let output = this.props.tinypngResult.output;
     return (
       <div>

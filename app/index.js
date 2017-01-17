@@ -50,9 +50,6 @@ class TinyUi extends Component {
   }
 
   onSuccessfulUpload(image) {
-    console.log(image);
-    this.setState({imageUrl: image});
-
     const basicAuth = 'api:' + this.state.apiKey;
     fetch('https://api.tinify.com/shrink', {
       method: 'post',
@@ -63,7 +60,9 @@ class TinyUi extends Component {
     }).then(res => {
       return res.json();
     }).then(data => {
-      console.log(data);
+      this.setState({
+        tinyPngResult: data,
+      });
     });
   }
 
@@ -93,10 +92,17 @@ class TinyUi extends Component {
         <ApiKeyUi apiKey={this.state.apiKey} onSuccess={this.onSuccessfulApiKey} />
       )
     }
-    else {
-      result = (
-        <FileDrop onUpload={this.onSuccessfulUpload}/>
-      );
+    else if (this.state.ui.activeTab === 'upload') {
+      if (typeof this.state.tinyPngResult !== 'undefined') {
+        result = (
+          <TinyPngResult tinypngResult={this.state.tinyPngResult} />
+        );
+      }
+      else {
+        result = (
+          <FileDrop onUpload={this.onSuccessfulUpload}/>
+        );
+      }
     }
 
     const tabs = (
