@@ -18,10 +18,22 @@ class TinyUi extends Component {
     };
     this.onSuccessfulApiKey = this.onSuccessfulApiKey.bind(this);
     this.onSuccessfulUpload = this.onSuccessfulUpload.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentDidMount() {
+    const apiKey = localStorage.getItem('tiny_ui__api_key');
+
+    if (apiKey !== null) {
+      this.setState({
+        apiKey: apiKey,
+      });
+    }
   }
 
   onSuccessfulApiKey(apiKey) {
     this.setState({apiKey: apiKey});
+    localStorage.setItem('tiny_ui__api_key', apiKey);
   }
 
   onSuccessfulUpload(image) {
