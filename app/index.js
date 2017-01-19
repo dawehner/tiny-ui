@@ -50,6 +50,7 @@ class TinyUi extends Component {
   }
 
   onSuccessfulUpload(image) {
+    console.log(image);
     this.setState({imageUrl: image});
 
     const basicAuth = 'api:' + this.state.apiKey;
@@ -89,7 +90,7 @@ class TinyUi extends Component {
     let result;
     if (this.state.ui.activeTab === 'apiKey') {
       result = (
-        <ApiKeyUi onSuccess={this.onSuccessfulApiKey} />
+        <ApiKeyUi apiKey={this.state.apiKey} onSuccess={this.onSuccessfulApiKey} />
       )
     }
     else {

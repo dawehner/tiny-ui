@@ -4,6 +4,24 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import ImagePreview from './ImagePreview.js';
 
+const {dialog} = require('electron').remote;
+const fs = require('electron').remote.require('fs');
+
+/**
+ * Converts a nodejs buffer to a browser array buffer.
+ *
+ * @param buf
+ * @returns {ArrayBuffer}
+ */
+function toArrayBuffer(buf) {
+  var ab = new ArrayBuffer(buf.length);
+  var view = new Uint8Array(ab);
+  for (var i = 0; i < buf.length; ++i) {
+    view[i] = buf[i];
+  }
+  return ab;
+}
+
 class FileDrop extends Component {
 
   constructor(props) {
@@ -16,6 +34,7 @@ class FileDrop extends Component {
 
     this.onDragOver = this.onDragOver.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   onDragOver(e) {
@@ -23,6 +42,18 @@ class FileDrop extends Component {
     e.stopPropagation();
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
+  }
+
+  onClick(e) {
+    dialog.showOpenDialog({properties: ['openFile', 'openDirectory']}, filePaths => {
+      fs.readFile(filePaths[0], (err, data) => {
+        if (err) {
+          throw err;
+        }
+
+        this.props.onUpload(toArrayBuffer(data));
+      });
+    });
   }
 
   onDrop(e) {
@@ -35,7 +66,6 @@ class FileDrop extends Component {
       if (file.type.match(/image.*/)) {
         const reader = new FileReader();
         reader.onload = (e2) => {
-          console.log(e2.target.result);
           this.setState({
             // imageUrl: 'data:image/png;base64,' + btoa(e2.target.result),
             image: e2.target.result,
@@ -53,6 +83,10 @@ class FileDrop extends Component {
       this.state.draggedOver && styles.dragOver,
     );
 
+    const classNameDescription = css(
+      styles.uploadDescription
+    );
+
     let preview;
 
     if (this.state.imageUrl !== null) {
@@ -61,10 +95,10 @@ class FileDrop extends Component {
 
     return (
       <div>
-        <div className={className} onDragOver={this.onDragOver} onDrop={this.onDrop} />
-        <div>
-          {preview}
+        <div className={className} onDragOver={this.onDragOver} onDrop={this.onDrop} onClick={this.onClick}>
+          <p className={classNameDescription}>Drop your .png or .jpg files here!</p>
         </div>
+        {preview}
       </div>
     )
   }
@@ -77,13 +111,27 @@ class FileDrop extends Component {
 
 const styles = StyleSheet.create({
   style: {
-    width: '500px',
-    height: '500px',
-    backgroundColor: 'red',
+    position: 'relative',
+    'z-index': '16',
+    width: '38rem',
+    height: '14rem',
+    margin: '0 auto',
+    padding: '0 0 1.6rem',
+    color: '#40444f',
+    border: '.2rem dashed #616778',
+    'border-radius': '1.5rem',
+    cursor: 'pointer',
   },
 
   dragOver: {
     opacity: 0.5,
+  },
+
+  uploadDescription: {
+    margin: 0,
+    'text-align': 'center',
+    'font-weight': 'bold',
+    'font-size': '1.75rem',
   },
 });
 
