@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Button, DataTable, TableHeader } from 'react-mdl/lib';
 
-import { webContents } from 'electron';
-
 class TinyPngresult extends Component {
 
   constructor(props) {
@@ -12,7 +10,6 @@ class TinyPngresult extends Component {
   }
 
   onSave() {
-    webContents.downloadURL(this.props.tinypngResult.output.url);
   }
 
   render() {
