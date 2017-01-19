@@ -1,7 +1,9 @@
-'use strict';
+'use babel';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
+import { Tabs, Tab } from 'react-mdl/lib';
 
 import ApiKeyUi from './components/ApiKeyUi.js';
 import FileDrop from './components/FileDrop.js';
@@ -14,26 +16,37 @@ class TinyUi extends Component {
 
     this.state = {
       apiKey: null,
+      ui: {
+        activeTabId: 0,
+        activeTab: null,
+      },
       image: null,
     };
     this.onSuccessfulApiKey = this.onSuccessfulApiKey.bind(this);
     this.onSuccessfulUpload = this.onSuccessfulUpload.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.clickTab = this.clickTab.bind(this);
   }
 
   componentDidMount() {
     const apiKey = localStorage.getItem('tiny_ui__api_key');
 
+    console.log(apiKey);
     if (apiKey !== null) {
-      this.setState({
-        apiKey: apiKey,
-      });
+      this.onSuccessfulApiKey(apiKey);
     }
   }
 
   onSuccessfulApiKey(apiKey) {
     this.setState({apiKey: apiKey});
     localStorage.setItem('tiny_ui__api_key', apiKey);
+    this.setState({
+      apiKey: apiKey,
+      ui: {
+        activeTabId: 1,
+        activeTab: 'upload',
+      }
+    });
   }
 
   onSuccessfulUpload(image) {
@@ -53,9 +66,28 @@ class TinyUi extends Component {
     });
   }
 
+  clickTab(tabId) {
+    if (tabId === 0) {
+      this.setState({
+        ui: {
+          activeTabId: tabId,
+          activeTab: 'apiKey',
+        },
+      });
+    }
+    else if (tabId === 1) {
+      this.setState({
+        ui: {
+          activeTabId: tabId,
+          activeTab: 'upload',
+        },
+      });
+    }
+  }
+
   render() {
     let result;
-    if (this.state.apiKey === null) {
+    if (this.state.ui.activeTab === 'apiKey') {
       result = (
         <ApiKeyUi onSuccess={this.onSuccessfulApiKey} />
       )
@@ -65,6 +97,24 @@ class TinyUi extends Component {
         <FileDrop onUpload={this.onSuccessfulUpload}/>
       );
     }
+
+    const tabs = (
+      <div>
+        <Tabs activeTab={this.state.ui.activeTabId} onChange={this.clickTab} ripple>
+          <Tab>Api key</Tab>
+          <Tab>Upload</Tab>
+        </Tabs>
+      </div>
+    );
+
+    return (
+      <div>
+        {tabs}
+        <section>
+          {result}
+        </section>
+      </div>
+    )
     return result;
   }
     
@@ -76,3 +126,7 @@ ReactDOM.render(
   document.getElementById('container')
 );
 
+window.addEventListener('menu', e => {
+  e.preventDefault();
+  console.log(e);
+});
