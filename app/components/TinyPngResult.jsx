@@ -62,7 +62,17 @@ class TinyPngresult extends Component {
 }
 
 TinyPngresult.propTypes = {
-  tinypngResult: React.PropTypes.object.isRequired,
+  tinypngResult: React.PropTypes.shape({
+    input: React.PropTypes.ignore,
+    output: React.PropTypes.shape({
+      url: React.PropTypes.string.isRequired,
+      height: React.PropTypes.number.isRequired,
+      width: React.PropTypes.number.isRequired,
+      ratio: React.PropTypes.number.isRequired,
+      size: React.PropTypes.number.isRequired,
+      type: React.PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default TinyPngresult;

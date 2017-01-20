@@ -111,22 +111,20 @@ class TinyUi extends Component {
     }
 
     const availableTabs = [
-      'Api key',
-      'Upload',
+      [0, 'Api key'],
+      [1, 'Upload'],
     ];
 
     if (typeof this.state.tinyPngResult !== 'undefined') {
-      availableTabs.push('Result');
+      availableTabs.push([2, 'Result']);
     }
 
     const tabs = (
       <div>
         <Tabs activeTab={this.state.ui.activeTabId} onChange={this.clickTab} ripple>
-          {availableTabs.map((label, key) => {
-            return (
-              <Tab key={key}>{label}</Tab>
-            );
-          })}
+          {availableTabs.map(value => (
+            <Tab key={value[0]}>{value[1]}</Tab>
+            ))}
         </Tabs>
       </div>
     );

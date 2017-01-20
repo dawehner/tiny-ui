@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "electron .",
-    "check": "eslint .  --ext .jsx --ext .js"
+    "check": "eslint .  --ext .jsx --ext .js",
+    "check-fix": "eslint .  --ext .jsx --ext .js --fix"
   },
   "devDependencies": {
     "electron-react-devtools": "^0.4.0",

@@ -52,7 +52,7 @@ class FileDrop extends Component {
     // Copied from https://stackoverflow.com/a/26580724/637596
     e.stopPropagation();
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
+    e.dataTransfer.dropEffect = 'copy';  // eslint-disable-line no-param-reassign
   }
 
   constructor(props) {
@@ -69,12 +69,14 @@ class FileDrop extends Component {
 
   onClick() {
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory'] }, (filePaths) => {
-      fs.readFile(filePaths[0], (err, data) => {
-        if (err) {
-          throw err;
-        }
+      filePaths.each((filePath) => {
+        fs.readFile(filePath, (err, data) => {
+          if (err) {
+            throw err;
+          }
 
-        this.props.onUpload(toArrayBuffer(data));
+          this.props.onUpload(toArrayBuffer(data));
+        });
       });
     });
   }
