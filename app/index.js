@@ -50,9 +50,6 @@ class TinyUi extends Component {
   }
 
   onSuccessfulUpload(image) {
-    console.log(image);
-    this.setState({imageUrl: image});
-
     const basicAuth = 'api:' + this.state.apiKey;
     fetch('https://api.tinify.com/shrink', {
       method: 'post',
@@ -63,7 +60,13 @@ class TinyUi extends Component {
     }).then(res => {
       return res.json();
     }).then(data => {
-      console.log(data);
+      this.setState({
+        tinyPngResult: data,
+        ui: {
+          activeTabId: 2,
+          activeTab: 'result'
+        },
+      });
     });
   }
 
@@ -84,6 +87,14 @@ class TinyUi extends Component {
         },
       });
     }
+    else if (tabId === 2) {
+      this.setState({
+        ui: {
+          activeTabId: tabId,
+          activeTab: 'result',
+        },
+      });
+    }
   }
 
   render() {
@@ -93,17 +104,32 @@ class TinyUi extends Component {
         <ApiKeyUi apiKey={this.state.apiKey} onSuccess={this.onSuccessfulApiKey} />
       )
     }
-    else {
+    else if (this.state.ui.activeTab === 'upload') {
       result = (
         <FileDrop onUpload={this.onSuccessfulUpload}/>
       );
+    }
+    else if (this.state.ui.activeTab === 'result') {
+      result = (
+        <TinyPngResult tinypngResult={this.state.tinyPngResult} />
+      );
+    }
+
+    let availableTabs = [
+      'Api key',
+      'Upload',
+    ];
+
+    if (typeof this.state.tinyPngResult !== 'undefined') {
+      availableTabs.push('Result');
     }
 
     const tabs = (
       <div>
         <Tabs activeTab={this.state.ui.activeTabId} onChange={this.clickTab} ripple>
-          <Tab>Api key</Tab>
-          <Tab>Upload</Tab>
+          {availableTabs.map((label, key) => {
+            return (<Tab key={key}>{label}</Tab>);
+          })}
         </Tabs>
       </div>
     );

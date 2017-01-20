@@ -1445,6 +1445,10 @@ electron-prebuilt@^1.4.13:
     electron-download "^3.0.1"
     extract-zip "^1.0.3"
 
+electron-react-devtools@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/electron-react-devtools/-/electron-react-devtools-0.4.0.tgz#06bd04d8e232b20703d059f5560a6f2a838bc163"
+
 electron-save-file@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/electron-save-file/-/electron-save-file-1.0.2.tgz#6eb91be59ca2869c5bfa5fde656bb6bde530f759"
