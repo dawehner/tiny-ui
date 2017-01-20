@@ -3,6 +3,10 @@ import { Textfield, Button } from 'react-mdl/lib';
 
 class ApiKeyUi extends Component {
 
+  static validateApiKey(apiKey) {
+    return apiKey.length === 32;
+  }
+
   constructor(props) {
     super(props);
 
@@ -41,10 +45,6 @@ class ApiKeyUi extends Component {
     this.props.onSuccess(this.state.apiKey);
   }
 
-  validateApiKey(apiKey) {
-    return apiKey.length === 32;
-  }
-
   render() {
     const apiKeyField = this.state.valid ? (
       <Textfield
@@ -62,23 +62,23 @@ class ApiKeyUi extends Component {
     );
 
     const button = this.state.valid ? (
-        <Button raised colored>Submit</Button>
-      ) : (
-        <Button raised colored disabled>Submit</Button>
-      );
+      <Button raised colored>Submit</Button>
+    ) : (
+      <Button raised colored disabled>Submit</Button>
+    );
     return (
       <form onSubmit={this.handleSubmit}>
         { apiKeyField }
         { button }
       </form>
-    )
+    );
   }
 
 }
 
 ApiKeyUi.propTypes = {
   apiKey: React.PropTypes.string.isRequired,
-  onSucces: React.PropTypes.func.isRequired,
+  onSuccess: React.PropTypes.func.isRequired,
 };
 
 export default ApiKeyUi;
