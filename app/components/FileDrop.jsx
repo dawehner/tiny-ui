@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import ImagePreview from './ImagePreview.js';
+import ImagePreview from './ImagePreview';
 
 const {dialog} = require('electron').remote;
 const fs = require('electron').remote.require('fs');

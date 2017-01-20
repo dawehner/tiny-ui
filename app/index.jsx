@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom';
 
 import { Tabs, Tab } from 'react-mdl/lib';
 
-import ApiKeyUi from './components/ApiKeyUi.js';
-import FileDrop from './components/FileDrop.js';
-import TinyPngResult from './components/TinyPngResult.js';
+import ApiKeyUi from './components/ApiKeyUi';
+import FileDrop from './components/FileDrop';
+import TinyPngResult from './components/TinyPngResult';
 
 class TinyUi extends Component {
 

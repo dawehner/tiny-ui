@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { StyleSheet, css } from 'aphrodite';
 import { Textfield, Button } from 'react-mdl/lib';
 
 class ApiKeyUi extends Component {
@@ -14,16 +13,7 @@ class ApiKeyUi extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-  }
-
-  validateApiKey(apiKey) {
-    return apiKey.length === 32;
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-
-    this.props.onSuccess(this.state.apiKey);
+    this.validateApiKey = this.validateApiKey.bind(this);
   }
 
   /**
@@ -45,21 +35,31 @@ class ApiKeyUi extends Component {
     };
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+
+    this.props.onSuccess(this.state.apiKey);
+  }
+
+  validateApiKey(apiKey) {
+    return apiKey.length === 32;
+  }
+
   render() {
     const apiKeyField = this.state.valid ? (
-        <Textfield
-          value={this.state.apiKey}
-          onChange={this.onChange('apiKey')}
-          label="Api key"
-        />
-      ) : (
-        <Textfield
-          value={this.state.apiKey}
-          onChange={this.onChange('apiKey')}
-          label="Api key"
-          error="Invalid API key"
-        />
-      );
+      <Textfield
+        value={this.state.apiKey}
+        onChange={this.onChange('apiKey')}
+        label="Api key"
+      />
+    ) : (
+      <Textfield
+        value={this.state.apiKey}
+        onChange={this.onChange('apiKey')}
+        label="Api key"
+        error="Invalid API key"
+      />
+    );
 
     const button = this.state.valid ? (
         <Button raised colored>Submit</Button>
@@ -75,5 +75,10 @@ class ApiKeyUi extends Component {
   }
 
 }
+
+ApiKeyUi.propTypes = {
+  apiKey: React.PropTypes.string.isRequired,
+  onSucces: React.PropTypes.func.isRequired,
+};
 
 export default ApiKeyUi;
