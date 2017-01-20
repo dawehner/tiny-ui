@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import { Textfield, Button } from 'react-mdl/lib';
 
-class ApiKeyUi extends Component {
+function validateApiKey(apiKey) {
+  return apiKey.length === 32;
+}
 
-  static validateApiKey(apiKey) {
-    return apiKey.length === 32;
-  }
+class ApiKeyUi extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
       apiKey: props.apiKey,
-      valid: this.validateApiKey(props.apiKey),
+      valid: validateApiKey(props.apiKey),
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.validateApiKey = this.validateApiKey.bind(this);
   }
 
   /**
@@ -34,7 +33,7 @@ class ApiKeyUi extends Component {
     return (e) => {
       this.setState({
         [fieldName]: e.target.value,
-        valid: this.validateApiKey(e.target.value),
+        valid: validateApiKey(e.target.value),
       });
     };
   }
@@ -70,6 +69,9 @@ class ApiKeyUi extends Component {
       <form onSubmit={this.handleSubmit}>
         { apiKeyField }
         { button }
+        <p>
+          Get an API key from https://tinypng.com.
+        </p>
       </form>
     );
   }
