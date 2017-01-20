@@ -62,6 +62,10 @@ class TinyUi extends Component {
     }).then(data => {
       this.setState({
         tinyPngResult: data,
+        ui: {
+          activeTabId: 2,
+          activeTab: 'result'
+        },
       });
     });
   }
@@ -83,6 +87,14 @@ class TinyUi extends Component {
         },
       });
     }
+    else if (tabId === 2) {
+      this.setState({
+        ui: {
+          activeTabId: tabId,
+          activeTab: 'result',
+        },
+      });
+    }
   }
 
   render() {
@@ -93,23 +105,31 @@ class TinyUi extends Component {
       )
     }
     else if (this.state.ui.activeTab === 'upload') {
-      if (typeof this.state.tinyPngResult !== 'undefined') {
-        result = (
-          <TinyPngResult tinypngResult={this.state.tinyPngResult} />
-        );
-      }
-      else {
-        result = (
-          <FileDrop onUpload={this.onSuccessfulUpload}/>
-        );
-      }
+      result = (
+        <FileDrop onUpload={this.onSuccessfulUpload}/>
+      );
+    }
+    else if (this.state.ui.activeTab === 'result') {
+      result = (
+        <TinyPngResult tinypngResult={this.state.tinyPngResult} />
+      );
+    }
+
+    let availableTabs = [
+      'Api key',
+      'Upload',
+    ];
+
+    if (typeof this.state.tinyPngResult !== 'undefined') {
+      availableTabs.push('Result');
     }
 
     const tabs = (
       <div>
         <Tabs activeTab={this.state.ui.activeTabId} onChange={this.clickTab} ripple>
-          <Tab>Api key</Tab>
-          <Tab>Upload</Tab>
+          {availableTabs.map((label, key) => {
+            return (<Tab key={key}>{label}</Tab>);
+          })}
         </Tabs>
       </div>
     );
