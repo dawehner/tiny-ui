@@ -10,6 +10,10 @@
   <body>
     <div id="container"></div>
     <script>
+      if (process.env.NODE_ENV !== 'production') {
+        require('electron-react-devtools').install()
+      }
+
       require('babel-register');
       require('./app/index');
     </script>
