@@ -1,5 +1,7 @@
 # tiny-ui
 
+This project implements a desktop app for https://tinypng.com based upon electron and react.
+
 ## Development
 
 * ```yarn install```
