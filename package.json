@@ -12,7 +12,7 @@
     "babel-register": "6.18",
     "babelify": "^7.3.0",
     "browserify": "^13.3.0",
-    "electron": "^13.6.6",
+    "electron": "^18.3.7",
     "electron-packager": "^8.5.0",
     "electron-save-file": "^1.0.2",
     "react": "^15.0.2",
